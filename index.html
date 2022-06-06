@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCK-PAPER-SCISSOR</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log("hello");
+
+    function computerPlay(){
+        let random = Math.floor(Math.random()*3);
+        switch (random){
+            case 0:
+                return "rock";
+            case 1:
+                return "paper";
+            case 2:
+                return "scissor";
+        }
+    }
+
+    function playRound(playerSelect, computerSelect){
+        if(playerSelect === computerSelect){
+            return "it's a tie! try again...";
+        }
+        if(playerSelect == "rock"){
+            if(computerSelect== "paper"){
+                return "you lose! paper beats rock.";
+            }else return "you win! rock beats scissors.";
+        } else if (playerSelect == "paper"){
+            if (computerSelect == " rock"){
+                return "you win! paper beats rock.";
+            }else return "you lose! scissors beat paper.";
+        } else if(computerSelect == "rock"){
+            return "you lose! rocks beats scissors.";
+        } else return "you win! scissors beat paper.";
+    }
+
+    function winner(player, computer){
+        return player > computer ? "you are the BIG WINNER": "SORRY! you lost"
+    }
+
+    function game(){
+        let [player , computer] = [0,0];
+        let attempt = 5; 
+        for(let i=0; i<5; i++){
+            let choice = prompt("choose rock,paper or scissor\n attempts left: "+ attempt + "\nscore : " + player + "-" + computer, "rock").toLowerCase() ;
+            if(choice == "rock" || choice == "paper" || choice == "scissor" ){
+                let result = playRound(choice,computerPlay());
+
+                if(result.includes("win")) {
+                    player++
+                }else if(result.includes("lose")){
+                    computer++
+                }else {
+                    i--;
+                    attempt++;
+                }
+                attempt--;
+                alert(result);
+            }else {
+                alert("input incorrect, please redo the round.");
+                i--;
+            }
+        }
+        alert(winner(player, computer));
+    }
+    game();
+
+</script>
+</html>
