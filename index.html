@@ -49,7 +49,9 @@
         let [player , computer] = [0,0];
         let attempt = 5; 
         for(let i=0; i<5; i++){
-            let choice = prompt("choose rock,paper or scissor\n attempts left: "+ attempt + "\nscore : " + player + "-" + computer, "rock").toLowerCase() ;
+            let choice = prompt("choose rock,paper or scissor\n attempts left: "+
+               attempt + "\nscore : " + player + "-" + computer, "rock").toLowerCase();
+               
             if(choice == "rock" || choice == "paper" || choice == "scissor" ){
                 let result = playRound(choice,computerPlay());
 
