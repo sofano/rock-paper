@@ -4,14 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>ROCK-PAPER-SCISSOR</title>
 </head>
 <body>
-    
+    <h2>Welcome to the rock-paper-scissor game</h2>
+    <div class="btns">
+        <button class="rock">Rock</button>
+        <button class="paper">Paper</button>
+        <button class="scissor">Scissor</button>
+    </div>
+    <div class="results">
+        <div id="player" class="data">PLAYER score <p>0</p></div>
+        <div id="output" class="data">
+            <h3>attempts left : <span class="attempts">5</span></h3>
+            <p id="msg">choose rock, paper or scissor and try to win the computer in 5 rounds !</p>
+        </div>
+        <div id="computer" class="data">COMPUTER score <p>0</p></div>
+    </div>
+    <footer>Created by : <a href="#">Soufiane G.</a></footer>
 </body>
 <script>
-    console.log("hello");
+    let attempts = document.querySelector(".attempts");
+    let player = document.querySelector("#player p");
+    let computer = document.querySelector("#computer p");
+    let para = document.querySelector('#msg');
+    let buttons = document.querySelectorAll('button');
+    Array.from(buttons).forEach(btn=> btn.addEventListener('click', playRound));
 
+    function playAgain(){
+        if(player.textContent > 2){
+            para.textContent = 'wow! you did it you won the game...let\' try another one';
+            para.classList.add('win');
+        }else {
+            para.textContent = 'bad luck! you lost...maybe next game';
+            para.classList.add('lose');
+        }
+
+        attempts.textContent = "5"
+        player.textContent = "0"
+        computer.textContent = '0'
+    }
+    
     function computerPlay(){
         let random = Math.floor(Math.random()*3);
         switch (random){
@@ -24,55 +58,44 @@
         }
     }
 
-    function playRound(playerSelect, computerSelect){
+    function playRound(event, computerSelect = computerPlay()){
+
+        let playerSelect = event.target.classList.value ;
+
+        if(para.classList.length) para.classList.value = '';
+
         if(playerSelect === computerSelect){
-            return "it's a tie! try again...";
+
+            para.textContent = "it's a tie! try again...";
+            return
         }
         if(playerSelect == "rock"){
             if(computerSelect== "paper"){
-                return "you lose! paper beats rock.";
-            }else return "you win! rock beats scissors.";
-        } else if (playerSelect == "paper"){
-            if (computerSelect == " rock"){
-                return "you win! paper beats rock.";
-            }else return "you lose! scissors beat paper.";
-        } else if(computerSelect == "rock"){
-            return "you lose! rocks beats scissors.";
-        } else return "you win! scissors beat paper.";
-    }
-
-    function winner(player, computer){
-        return player > computer ? "you are the BIG WINNER": "SORRY! you lost"
-    }
-
-    function game(){
-        let [player , computer] = [0,0];
-        let attempt = 5; 
-        for(let i=0; i<5; i++){
-            let choice = prompt("choose rock,paper or scissor\n attempts left: "+
-               attempt + "\nscore : " + player + "-" + computer, "rock").toLowerCase();
-               
-            if(choice == "rock" || choice == "paper" || choice == "scissor" ){
-                let result = playRound(choice,computerPlay());
-
-                if(result.includes("win")) {
-                    player++
-                }else if(result.includes("lose")){
-                    computer++
-                }else {
-                    i--;
-                    attempt++;
-                }
-                attempt--;
-                alert(result);
+                para.textContent= "you lose! paper beats rock.";
+                computer.textContent++;
             }else {
-                alert("input incorrect, please redo the round.");
-                i--;
+                para.textContent = "you win! rock beats scissors."; 
+                player.textContent++;
             }
+        } else if (playerSelect == "paper"){
+            if (computerSelect == "rock"){
+                para.textContent = "you win! paper beats rock.";
+                player.textContent++;
+            }else {
+                para.textContent = "you lose! scissors beat paper.";
+                computer.textContent++;
+            }
+        } else if(computerSelect == "rock"){
+            para.textContent = "you lose! rocks beats scissors.";
+            computer.textContent++;
+        } else {
+            para.textContent = "you win! scissors beat paper.";
+            player.textContent++;
         }
-        alert(winner(player, computer));
-    }
-    game();
 
+        attempts.textContent-- ;
+        if(!parseInt(attempts.textContent)) playAgain();
+    }
+    
 </script>
 </html>
